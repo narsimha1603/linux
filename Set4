@@ -1,0 +1,52 @@
+12.	Create a  file with 20 lines and Display 5-12 lines.
+
+for i in {1..20}; do
+    echo "Line $i" >> sample.txt
+done
+
+sed -n '5,12p' sample.txt
+
+13.	Create a backup files.
+
+cp sample.txt sample_backup.txt
+
+14.	Display the lines NOT matched with given pattern using grep command.
+
+Suppose you have a file sample.txt
+Line 1: Hello World
+Line 2: Welcome to Linux Lab
+Line 3: Hello Copilot
+Line 4: Pattern Matching
+Line 5: Hello Again
+
+If you want to display lines that do NOT contain "Hello":
+grep -v "Hello" sample.txt
+
+output:
+Line 2: Welcome to Linux Lab
+Line 4: Pattern Matching
+
+15.	Write a shell script that deletes all lines containing a specified word in one or more files supplied as arguments to it.
+
+#delete_word.sh
+if [ $# -lt 2 ]; then
+    echo "Usage: $0 word file1 [file2 ...]"
+    exit 1
+fi
+word=$1
+shift
+for file in "$@"
+do
+    if [ -f "$file" ]; then
+        sed -i "/$word/d" "$file"
+        echo "Processed $file: removed lines containing '$word'"
+    else
+        echo "File $file not found!"
+    fi
+done
+
+
+chmod +x delete_word.sh
+
+#Run it with a word and files
+./delete_word.sh Hello sample.txt test.txt
