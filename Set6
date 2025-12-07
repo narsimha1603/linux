@@ -1,0 +1,67 @@
+1.	Create Owner and Group. Display system IP Address
+
+#In Linux, ownership is tied to users and groups.
+#Create a new group:
+
+sudo groupadd mygroup
+
+#Create a new user and assign to the group
+sudo useradd -g mygroup myuser
+
+#Set a password for the new user:
+sudo passwd myuser
+
+#Display ip address
+
+ip addr show
+
+2.	Taking the below students marks data as reference file , Display total marks of student with two fields(name, total)    s.no,name,test1,test2,test3 and four records.
+1	A	75	81	89
+2	B	86	94	82
+3	C	90	71	96
+4	D	82	70	85
+
+
+#Create marks.txt Using cat with redirection
+cat > marks.txt <<EOF
+s.no name test1 test2 test3
+1 A 75 81 89
+2 B 86 94 82
+3 C 90 71 96
+4 D 82 70 85
+EOF
+
+#Use awk to calculate total
+awk 'NR>1 { total=$3+$4+$5; print $2, total }' marks.txt
+
+#output:
+A 245
+B 262
+C 257
+D 237
+
+3.	Write a shell script that receives any number of file names as arguments checks if every argument supplied is a file or a directory and reports accordingly. Whenever the argument is a file, the number of lines on it is also reported..
+
+#check_files.sh
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 file_or_directory [file_or_directory ...]"
+    exit 1
+fi
+for item in "$@"
+do
+    if [ -f "$item" ]; then
+        # It's a file → count lines
+        lines=$(wc -l < "$item")
+        echo "'$item' is a file with $lines lines."
+    elif [ -d "$item" ]; then
+        # It's a directory
+        echo "'$item' is a directory."
+    else
+        # Neither file nor directory
+        echo "'$item' does not exist."
+    fi
+done
+
+chmod +x check_files.sh
+
+./check_files.sh sample.txt marks.txt /home /etc
