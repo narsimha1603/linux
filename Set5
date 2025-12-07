@@ -1,0 +1,64 @@
+16.	Replace the linux with unix using sed .
+#Suppose sample.txt contains:
+I love linux.
+linux is powerful.
+Learning linux is fun.
+
+#Run:
+sed 's/linux/unix/g' sample.txt
+
+output:-
+I love unix.
+unix is powerful.
+Learning unix is fun.
+
+17.	Display the Active Process, Zombie process and Remove any unwanted process.
+
+#Active processes are the ones currently running. You can use:
+ps -ef
+
+#Display Zombie Processes
+#Zombie processes are defunct processes that remain in the process table. To list them:
+ps -ef | grep defunct
+
+#Remove (Kill) Unwanted Processes
+#Once you identify the PID (Process ID) of the unwanted process, you can terminate it:
+kill -9 <PID>
+
+18.	Display the lines NOT matched with given pattern using grep command.
+
+#Suppose sample.txt contains:
+Linux is powerful
+Unix is stable
+Linux is open source
+Unix is widely used
+
+#display lines that do NOT contain "Linux":
+grep -v "Linux" sample.txt
+
+#Output
+Unix is stable
+Unix is widely used
+
+19.	Write the following Shell script to find factorial of a given integer.
+#factorial.sh
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 number"
+    exit 1
+fi
+num=$1
+fact=1
+for (( i=1; i<=num; i++ ))
+do
+    fact=$((fact * i))
+done
+echo "Factorial of $num is: $fact"
+
+chmod +x factorial.sh
+
+#Run it with an integer:
+./factorial.sh 5
+
+#output:
+Factorial of 5 is: 120
+
